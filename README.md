@@ -69,3 +69,23 @@ left join Employee e on a.company_code = e.company_code
 group by a.company_code, a.founder
 order by a.company_code;
 </code></pre>
+
+<h4>Q3 . The report must be in descending order by grade -- i.e. higher grades are entered first. If there is more than one student with the same grade (8-10) assigned to them, order those particular students by their name alphabetically. Finally, if the grade is lower than 8, use "NULL" as their name and list them by their grades in descending order. If there is more than one student with the same grade (1-7) assigned to them, order those particular students by their marks in ascending order.</h4>
+<h4>💾 DataFrames Used:</h4>
+
+- `Students(id, name, marks)`
+- `Grades(min_mark, max_mark, grade)`
+
+<h3>🧪 Solution (Using <code>SQL</code>):</h3>
+
+<pre><code class="language-sql">
+with 
+grades_marks as (
+select a.id, a.name, a.marks, b.grade from students a
+left join Grades b on a.marks between b.min_mark and b.max_mark
+)
+select case when a.grade >= 8 THEN a.name else null end names, 
+a.grade, a.marks
+from grades_marks a
+order by a.grade desc, case when a.grade >= 8 THEN a.name else null end;
+</code></pre>
