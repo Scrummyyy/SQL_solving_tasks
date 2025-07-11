@@ -47,6 +47,25 @@ select hacker_id, name, rn from(
     )
 )
 select hacker_id, name from cte
-order by rn desc, hacker_id
-;
+order by rn desc, hacker_id;
+</code></pre>
+<h4>Q2 Given the table schemas below, write a query to print the company_code, founder name, total number of lead managers, total number of senior managers, total number of managers, and total number of employees. Order your output by ascending company_code.</h4>
+<h4>💾 DataFrames Used:</h4>
+
+- `Company(company_code, founder)`
+- `Employee(company_code, manager_code, senior_manager_code, lead_manager_code,  Employee_code)`
+
+<h3>🧪 Solution (Using <code>SQL</code>):</h3>
+
+<pre><code class="language-sql">
+select 
+a.company_code, a.founder,
+count(distinct e.lead_manager_code) lead_manager_count, 
+count(distinct e.Senior_Manager_code) Senior_Manager_count,
+count(distinct e.Manager_code) manager_count,
+count(distinct e.Employee_code) Employee_count
+from Company a
+left join Employee e on a.company_code = e.company_code
+group by a.company_code, a.founder
+order by a.company_code;
 </code></pre>
