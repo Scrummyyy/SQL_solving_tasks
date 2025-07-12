@@ -131,3 +131,21 @@ where rank_earnings = 1
 group by earnings 
 ;
 </code></pre>
+
+<h4>Q6 A median is defined as a number separating the higher half of a data set from the lower half. Query the median of the Northern Latitudes (LAT_N) from STATION and round your answer to  decimal places.</h4>
+<h4>💾 DataFrame Used:</h4>
+
+- `Station (id, city, state, lat_n, long_w)`
+
+<h3>🧪 Solution (Using <code>SQL</code>):</h3>
+
+<pre><code class="language-sql">
+select round(lat_n, 4) from(
+select 
+id, city, state, lat_n, long_w,
+rank() over(order by lat_n desc) rank_lat_n
+from station
+)
+where rank_lat_n = (select round(count(*) / 2) from station)
+;
+</code></pre>
