@@ -70,7 +70,7 @@ group by a.company_code, a.founder
 order by a.company_code;
 </code></pre>
 
-<h4>Q3 . The report must be in descending order by grade -- i.e. higher grades are entered first. If there is more than one student with the same grade (8-10) assigned to them, order those particular students by their name alphabetically. Finally, if the grade is lower than 8, use "NULL" as their name and list them by their grades in descending order. If there is more than one student with the same grade (1-7) assigned to them, order those particular students by their marks in ascending order.</h4>
+<h4>Q3 The report must be in descending order by grade -- i.e. higher grades are entered first. If there is more than one student with the same grade (8-10) assigned to them, order those particular students by their name alphabetically. Finally, if the grade is lower than 8, use "NULL" as their name and list them by their grades in descending order. If there is more than one student with the same grade (1-7) assigned to them, order those particular students by their marks in ascending order.</h4>
 <h4>💾 DataFrames Used:</h4>
 
 - `Students(id, name, marks)`
@@ -88,4 +88,28 @@ select case when a.grade >= 8 THEN a.name else null end names,
 a.grade, a.marks
 from grades_marks a
 order by a.grade desc, case when a.grade >= 8 THEN a.name else null end;
+</code></pre>
+
+<h4>Q4 Write a query to output the names of those students whose best friends got offered a higher salary than them. Names must be ordered by the salary amount offered to the best friends. It is guaranteed that no two students got same salary offer.</h4>
+<h4>💾 DataFrames Used:</h4>
+
+- `Students(id, name)`
+- `Friends(id, friend_id)`
+- `Packeges(id, salary)`
+
+<h3>🧪 Solution (Using <code>SQL</code>):</h3>
+
+<pre><code class="language-sql">
+select name from(
+Select 
+a.id, a.name, b.friend_id, 
+p.salary as id_salary, p2.salary as friend_salary 
+from Students a
+left join Friends b on a.id = b.id 
+left join Packages p on a.id = p.id
+left join Packages p2 on b.friend_id = p2.id
+)
+where id_salary < friend_salary
+order by friend_salary
+;
 </code></pre>
