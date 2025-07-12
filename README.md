@@ -113,3 +113,21 @@ where id_salary < friend_salary
 order by friend_salary
 ;
 </code></pre>
+
+<h4>Q5 Write a query to find the maximum total earnings for all employees as well as the total number of employees who have maximum total earnings. Then print these values as  space-separated integers.</h4>
+<h4>💾 DataFrame Used:</h4>
+
+- `Employee (employee_id, name, months, salary)`
+
+<h3>🧪 Solution (Using <code>SQL</code>):</h3>
+
+<pre><code class="language-sql">
+select earnings, count(employee_id) from(
+select employee_id, salary * months as earnings,
+rank() over(order by salary * months desc) as rank_earnings 
+from Employee 
+)
+where rank_earnings = 1
+group by earnings 
+;
+</code></pre>
