@@ -173,3 +173,20 @@ order by substr(name, -3), id;
 select distinct city from station
 where lower(city) like 'a%' or lower(city) like 'u%' or lower(city) like 'o%' or lower(city) like 'i%' or lower(city) like 'e%';
 </code></pre>
+
+
+<h4>Q9 Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective average city populations (CITY.Population) rounded down to the nearest integer.
+
+Note: CITY.CountryCode and COUNTRY.Code are matching key columns.</h4>
+<h4>💾 DataFrame Used:</h4>
+
+- `Country`
+- `Continent`
+
+<h3>🧪 Solution (Using <code>SQL</code>):</h3>
+
+<pre><code class="language-sql">
+select a.continent, floor(avg(b.population)) from country a
+inner join city b on a.code = b.countrycode
+group by a.continent;
+</code></pre>
