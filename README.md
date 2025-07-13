@@ -161,3 +161,15 @@ select name from students
 where marks > 75
 order by substr(name, -3), id;
 </code></pre>
+
+<h4>Q8 Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.</h4>
+<h4>💾 DataFrame Used:</h4>
+
+- `Station (id, city, state, lat_n, long_w)`
+
+<h3>🧪 Solution (Using <code>SQL</code>):</h3>
+
+<pre><code class="language-sql">
+select distinct city from station
+where lower(city) like 'a%' or lower(city) like 'u%' or lower(city) like 'o%' or lower(city) like 'i%' or lower(city) like 'e%';
+</code></pre>
