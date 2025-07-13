@@ -146,6 +146,18 @@ id, city, state, lat_n, long_w,
 rank() over(order by lat_n desc) rank_lat_n
 from station
 )
-where rank_lat_n = (select round(count(*) / 2) from station)
-;
+where rank_lat_n = (select round(count(*) / 2) from station);
+</code></pre>
+
+<h4>Q7 Query the Name of any student in STUDENTS who scored higher than 75 Marks. Order your output by the last three characters of each name. If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), secondary sort them by ascending ID.</h4>
+<h4>💾 DataFrame Used:</h4>
+
+- `Students (id, name, marks)`
+
+<h3>🧪 Solution (Using <code>SQL</code>):</h3>
+
+<pre><code class="language-sql">
+select name from students 
+where marks > 75
+order by substr(name, -3), id;
 </code></pre>
